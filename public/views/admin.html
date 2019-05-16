@@ -1,0 +1,73 @@
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+        <script src="https://code.jquery.com/jquery-git.js"></script>
+
+  </head>
+  <body>
+    <div id="adminID"class="admin" style="display: block">
+      Password:
+      <input id="password" type="password" name="password" value="">
+      <input id="passwordButton" type="button" name="passwordButton" value="Check Password" >
+    </div>
+    <div id="secret" style="display: none">
+          <br>
+          Time before you can scan again
+          <input id="cooldown" type="text" name="" value=""><br><br>
+          Change link for teacher's google sheet:
+          <input type="text" id="sheet" name="" placeholder="Change Sheet's Link">
+
+          <!-- Add that here cuz it already exists --><br><br>
+          <input id="submitButton" type="button" name="button" value="Submit" onclick="submitCool()">
+          <input id="cool" type="button" name="yee" value="cool" onclick="cool()">
+        </div>
+
+    <script type="text/javascript">
+    var key = "a"
+    var x = document.getElementById("secret");
+    var cooldownVal =0;
+
+
+
+    function submitCool() {
+      $.ajax({
+        url: "/cooldown",
+        type: "POST",
+        data:{cool:$("#cooldown").val()},
+        dataType: "json"
+      });
+
+        $("#changeLink").prop("href", $("#sheet").val())
+      cooldownVal = parseInt($("#cooldown").val())
+    }
+
+    function cool() {
+      console.log(cooldownVal);
+    }
+
+    function checkPass() {
+      if($("#password").val() === key){
+        $("#secret").show();
+      }
+    }
+    /////////////////////////////////////////////////////////////////////////////////////
+    $(document).ready(function(){
+
+      $("#passwordButton").click(function() {
+         checkPass(); // $(this) refers to button that was clicked
+
+         console.log("clicked");
+    });
+
+
+             // recentData();
+        });
+
+
+    </script>
+  </body>
+</html>
